@@ -1,16 +1,13 @@
 package com.example.entrevueSpringBoot.dto.response;
 
+/*
+ * @author Allan Martins
+ */
+
 public class UrlGetResponse {
-    private Long id;
     private String urlOriginal;
     private String urlShortned;
    
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
 	public String getUrlOriginal() {
 		return urlOriginal;
 	}

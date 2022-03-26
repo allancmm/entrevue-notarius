@@ -1,22 +1,19 @@
 package com.example.entrevueSpringBoot.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.annotation.Id;
 
 /*
  * @author Allan Martins
  */
-@Entity
-@Table(name="url")
-public class Url extends BaseEntity {
+@Document(collection = "Url")
+public class Url {
 
-	@Column(name = "urlShortned")
+	@Id
 	private String urlShortned;
 	
-	@Column(name = "urlOriginal")
 	private String urlOriginal;
-
+	
 	public String getUrlShortned() {
 		return urlShortned;
 	}
@@ -32,6 +29,4 @@ public class Url extends BaseEntity {
 	public void setUrlOriginal(String urlOriginal) {
 		this.urlOriginal = urlOriginal;
 	}
-	
-	
 }

@@ -8,15 +8,16 @@ import com.example.entrevueSpringBoot.dto.response.UrlGetResponse;
 import com.example.entrevueSpringBoot.dto.response.UrlPostResponse;
 import com.example.entrevueSpringBoot.model.Url;
 
+/*
+ * @author Allan Martins
+ */
+
 @Mapper(componentModel = "spring") 
 public interface UrlMapper {
-    public String mapToUrlShortened(Url url);
+   public String mapToUrlShortened(Url url);
     
-    @Mapping(source = "request.urlToShort", target = "urlOriginal")
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "modifiedAt", ignore = true)
-    @Mapping(target = "id", ignore = true)
-    public Url mapToUrl(UrlPostRequest request, String urlShortned);
+   @Mapping(source = "request.urlToShort", target = "urlOriginal")
+   public Url mapToUrl(UrlPostRequest request, String urlShortned);
     
    public UrlGetResponse mapToUrlGetResponse(Url url);  
    

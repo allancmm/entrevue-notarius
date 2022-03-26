@@ -15,6 +15,10 @@ import com.example.entrevueSpringBoot.mapper.UrlMapper;
 import com.example.entrevueSpringBoot.model.Url;
 import com.example.entrevueSpringBoot.repository.URLRepository;
 
+/*
+ * @author Allan Martins
+ */
+
 @Service
 public class UrlService {
 
@@ -40,7 +44,7 @@ public class UrlService {
 		MessageDigest md = MessageDigest.getInstance(MD5);
 	    md.update(urlRequest.urlToShort.getBytes());	   	    
 	    byte[] encodedUrlShortned = Base64.getEncoder().encode(md.digest());
-	    String urlShortned = new String(encodedUrlShortned).substring(0, MAX_LENGHT_URL_SHORTNED);
+	    String urlShortned = new String(encodedUrlShortned).substring(0, MAX_LENGHT_URL_SHORTNED);	    
    	    return urlMapper.mapToUrlPostResponse(urlRepository.save(urlMapper.mapToUrl(urlRequest, urlShortned)));	    
    }
 }
