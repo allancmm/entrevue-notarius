@@ -28,7 +28,7 @@ public class UrlService {
 	@Autowired
 	private UrlMapper urlMapper;
 	
-	private final String MD5 = "MD5";
+	private final String HASH_ALGORITHM = "MD5";
 	private final int MAX_LENGHT_URL_SHORTNED = 10;
 
 	public Optional<UrlGetResponse> getURLShortned(String urlShortned) {
@@ -41,9 +41,9 @@ public class UrlService {
    }
 	
    public UrlPostResponse saveUrl(UrlPostRequest urlRequest) throws NoSuchAlgorithmException {
-		MessageDigest md = MessageDigest.getInstance(MD5);
+		MessageDigest md = MessageDigest.getInstance(HASH_ALGORITHM);
 	    md.update(urlRequest.urlToShort.getBytes());	   	    
-	    byte[] encodedUrlShortned = Base64.getEncoder().encode(md.digest());
+	    byte[] encodedUrlShortned = Base64.getUrlEncoder().encode(md.digest());
 	    String urlShortned = new String(encodedUrlShortned).substring(0, MAX_LENGHT_URL_SHORTNED);	    
    	    return urlMapper.mapToUrlPostResponse(urlRepository.save(urlMapper.mapToUrl(urlRequest, urlShortned)));	    
    }
