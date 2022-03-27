@@ -10,16 +10,16 @@ import org.springframework.data.annotation.Id;
 public class Url {
 
 	@Id
-	private String urlShortned;
+	private String urlShortened;
 	
 	private String urlOriginal;
 	
-	public String getUrlShortned() {
-		return urlShortned;
+	public String geturlShortened() {
+		return urlShortened;
 	}
 
-	public void setUrlShortned(String urlShortned) {
-		this.urlShortned = urlShortned;
+	public void seturlShortened(String urlShortened) {
+		this.urlShortened = urlShortened;
 	}
 
 	public String getUrlOriginal() {

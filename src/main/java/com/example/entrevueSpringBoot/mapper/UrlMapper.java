@@ -17,7 +17,7 @@ public interface UrlMapper {
    public String mapToUrlShortened(Url url);
     
    @Mapping(source = "request.urlToShort", target = "urlOriginal")
-   public Url mapToUrl(UrlPostRequest request, String urlShortned);
+   public Url mapToUrl(UrlPostRequest request, String urlShortened);
     
    public UrlGetResponse mapToUrlGetResponse(Url url);  
    

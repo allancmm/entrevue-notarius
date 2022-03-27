@@ -31,8 +31,8 @@ public class UrlService {
 	private final String HASH_ALGORITHM = "MD5";
 	private final int MAX_LENGHT_URL_SHORTNED = 10;
 
-	public Optional<UrlGetResponse> getURLShortned(String urlShortned) {
-		final Optional<Url> url = urlRepository.findByUrlShortned(urlShortned);
+	public Optional<UrlGetResponse> geturlShortened(String urlShortened) {
+		final Optional<Url> url = urlRepository.findByurlShortened(urlShortened);
 		if(url.isEmpty()) {
 			return Optional.empty();
 		}
@@ -43,8 +43,8 @@ public class UrlService {
    public UrlPostResponse saveUrl(UrlPostRequest urlRequest) throws NoSuchAlgorithmException {
 		MessageDigest md = MessageDigest.getInstance(HASH_ALGORITHM);
 	    md.update(urlRequest.urlToShort.getBytes());	   	    
-	    byte[] encodedUrlShortned = Base64.getUrlEncoder().encode(md.digest());
-	    String urlShortned = new String(encodedUrlShortned).substring(0, MAX_LENGHT_URL_SHORTNED);	    
-   	    return urlMapper.mapToUrlPostResponse(urlRepository.save(urlMapper.mapToUrl(urlRequest, urlShortned)));	    
+	    byte[] encodedurlShortened = Base64.getUrlEncoder().encode(md.digest());
+	    String urlShortened = new String(encodedurlShortened).substring(0, MAX_LENGHT_URL_SHORTNED);	    
+   	    return urlMapper.mapToUrlPostResponse(urlRepository.save(urlMapper.mapToUrl(urlRequest, urlShortened)));	    
    }
 }

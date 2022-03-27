@@ -6,7 +6,7 @@ package com.example.entrevueSpringBoot.dto.response;
 
 public class UrlGetResponse {
     private String urlOriginal;
-    private String urlShortned;
+    private String urlShortened;
    
 	public String getUrlOriginal() {
 		return urlOriginal;
@@ -14,10 +14,10 @@ public class UrlGetResponse {
 	public void setUrlOriginal(String urlOriginal) {
 		this.urlOriginal = urlOriginal;
 	}
-	public String getUrlShortned() {
-		return urlShortned;
+	public String geturlShortened() {
+		return urlShortened;
 	}
-	public void setUrlShortned(String urlShortned) {
-		this.urlShortned = urlShortned;
+	public void seturlShortened(String urlShortened) {
+		this.urlShortened = urlShortened;
 	}   
 }

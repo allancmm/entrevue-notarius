@@ -13,5 +13,5 @@ import com.example.entrevueSpringBoot.model.Url;
 @Repository
 public interface URLRepository extends MongoRepository<Url, String> {
 
-	public Optional<Url> findByUrlShortned(String urlShortned);
+	public Optional<Url> findByurlShortened(String urlShortened);
 }

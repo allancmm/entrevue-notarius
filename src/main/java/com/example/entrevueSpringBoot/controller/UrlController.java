@@ -46,8 +46,8 @@ public class UrlController {
 	                                    schema = @Schema(implementation = UrlGetResponse.class))}),
 	                       @ApiResponse(responseCode = "404", description = "URL not fount", content = @Content)}) 
 	@GetMapping
-	public ResponseEntity<UrlGetResponse> getURL(@RequestParam("urlShortned") String urlShortned){
-		final Optional<UrlGetResponse> url = urlService.getURLShortned(urlShortned);
+	public ResponseEntity<UrlGetResponse> getURL(@RequestParam("urlShortened") String urlShortened){
+		final Optional<UrlGetResponse> url = urlService.geturlShortened(urlShortened);
 		if(url.isEmpty()) {
 			return ResponseEntity.notFound().build();
 	    }		
