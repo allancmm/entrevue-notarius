@@ -2,8 +2,6 @@ package com.example.entrevueSpringBoot.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-import java.util.Optional;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,12 +44,8 @@ public class UrlController {
 	                                    schema = @Schema(implementation = UrlGetResponse.class))}),
 	                       @ApiResponse(responseCode = "404", description = "URL not fount", content = @Content)}) 
 	@GetMapping
-	public ResponseEntity<UrlGetResponse> getURL(@RequestParam("urlShortened") String urlShortened){
-		final Optional<UrlGetResponse> url = urlService.geturlShortened(urlShortened);
-		if(url.isEmpty()) {
-			return ResponseEntity.notFound().build();
-	    }		
-         return new ResponseEntity<UrlGetResponse>(url.get(), HttpStatus.OK);
+	public ResponseEntity<UrlGetResponse> getURL(@RequestParam("urlShortened") String urlShortened) {
+         return new ResponseEntity<UrlGetResponse>(urlService.getUrlShortened(urlShortened), HttpStatus.OK);
 	}
 	
 	@Operation(summary = "Short URL")

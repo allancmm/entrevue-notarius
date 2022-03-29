@@ -5,12 +5,12 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.entrevueSpringBoot.dto.request.UrlPostRequest;
 import com.example.entrevueSpringBoot.dto.response.UrlGetResponse;
 import com.example.entrevueSpringBoot.dto.response.UrlPostResponse;
+import com.example.entrevueSpringBoot.exception.UrlShortenedNotFoundException;
 import com.example.entrevueSpringBoot.mapper.UrlMapper;
 import com.example.entrevueSpringBoot.model.Url;
 import com.example.entrevueSpringBoot.repository.URLRepository;
@@ -22,22 +22,25 @@ import com.example.entrevueSpringBoot.repository.URLRepository;
 @Service
 public class UrlService {
 
-	@Autowired
-	private URLRepository urlRepository;
+	private final URLRepository urlRepository;
 	
-	@Autowired
-	private UrlMapper urlMapper;
+	private final UrlMapper urlMapper;
+	
+	public UrlService(URLRepository urlRepository, UrlMapper urlMapper) {
+		this.urlRepository = urlRepository;
+		this.urlMapper = urlMapper;
+	}
 	
 	private final String HASH_ALGORITHM = "MD5";
 	private final int MAX_LENGHT_URL_SHORTNED = 10;
 
-	public Optional<UrlGetResponse> geturlShortened(String urlShortened) {
+	public UrlGetResponse getUrlShortened(String urlShortened) {
 		final Optional<Url> url = urlRepository.findByurlShortened(urlShortened);
 		if(url.isEmpty()) {
-			return Optional.empty();
+			throw new UrlShortenedNotFoundException("Url not found: " + urlShortened);
 		}
 		
-		return Optional.of(urlMapper.mapToUrlGetResponse(url.get()));
+		return urlMapper.mapToUrlGetResponse(url.get());
    }
 	
    public UrlPostResponse saveUrl(UrlPostRequest urlRequest) throws NoSuchAlgorithmException {
