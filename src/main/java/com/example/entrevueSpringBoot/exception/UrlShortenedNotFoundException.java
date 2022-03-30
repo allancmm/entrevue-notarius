@@ -10,4 +10,8 @@ public class UrlShortenedNotFoundException extends RuntimeException {
 	public UrlShortenedNotFoundException(String message) {
     	super(message);
     }
+	
+	public UrlShortenedNotFoundException(String message, Throwable cause) {
+		super(message, cause);
+	}
 }

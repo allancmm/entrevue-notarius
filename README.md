@@ -1,7 +1,7 @@
 # Spring Boot
 
 ## How to use
-  * make sure you have mongodb install with a URLStore.URLStore
+  * make sure you have mongodb installed with a URLStore.URL
   * maven install
   * run application
 
