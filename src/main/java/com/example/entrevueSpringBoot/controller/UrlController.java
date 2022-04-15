@@ -52,8 +52,7 @@ public class UrlController {
 	             content = {@Content(mediaType = APPLICATION_JSON_VALUE,
 	             schema = @Schema(implementation = UrlPostResponse.class))})
 	@PostMapping(consumes = APPLICATION_JSON_VALUE) 
-	public ResponseEntity<UrlPostResponse> postURL(@Valid @RequestBody UrlPostRequest request) throws ApiNoSuchAlgorithmException {
+	public ResponseEntity<UrlPostResponse> postURL(@Valid @RequestBody UrlPostRequest request) throws ApiNoSuchAlgorithmException  {		
 		return new ResponseEntity<UrlPostResponse>(urlService.saveUrl(request), HttpStatus.CREATED);
 	}
-
 }

@@ -45,8 +45,9 @@ public class UrlService {
 		try {
 			md = MessageDigest.getInstance(HASH_ALGORITHM);
 		} catch (NoSuchAlgorithmException e) {
-			throw new ApiNoSuchAlgorithmException("Oups, it seems that we have a problem");
+			throw new ApiNoSuchAlgorithmException("Oops, it seems that we have a problem");
 		}
+
 	    md.update(urlRequest.urlToShort.getBytes());	   	    
 	    byte[] encodedurlShortened = Base64.getUrlEncoder().encode(md.digest());
 	    String urlShortened = new String(encodedurlShortened).substring(0, MAX_LENGHT_URL_SHORTNED);	    
