@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,7 +24,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	   return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiException);
    }      
    
-   @ExceptionHandler({ Exception.class, ApiNoSuchAlgorithmException.class})
+   @ExceptionHandler({ Exception.class })
    public ResponseEntity<ApiException> handleGenericException(Exception e) {
 	   List<String> details = new ArrayList<>();
 	   details.add(e.getLocalizedMessage());
@@ -33,9 +34,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
    @ExceptionHandler(NullPointerException.class)
    public ResponseEntity<ApiException> handleException(NullPointerException e) {
+	   
 	   ApiException apiException = new ApiException("We tried to read a null object, what a shame", HttpStatus.INTERNAL_SERVER_ERROR);
 	   return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiException);
    }
+   
+   
+   // 
    
    @Override
    protected ResponseEntity<Object> handleMissingServletRequestParameter(MissingServletRequestParameterException e, HttpHeaders headers,
@@ -45,6 +50,17 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	   ApiException apiException = new ApiException(e.getMessage(), details, HttpStatus.BAD_REQUEST);
 	   return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiException);
    }
+   
+   @Override
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {	
+	   
+	   ex.getBindingResult()
+	   .getFieldErrors().stream().forEach( f -> System.out.println(f.getDefaultMessage()));
+	   
+	   ApiException apiException = new ApiException(ex.getMessage(), HttpStatus.BAD_REQUEST);
+	   return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiException);
+	}
    
    @Override
 	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,

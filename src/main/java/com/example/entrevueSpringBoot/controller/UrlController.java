@@ -29,7 +29,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 /*
  * @author Allan Martins
  */
-
 @RestController
 @RequestMapping(path = "/api/v1/url", produces = APPLICATION_JSON_VALUE)
 public class UrlController {
@@ -52,7 +51,7 @@ public class UrlController {
 	             content = {@Content(mediaType = APPLICATION_JSON_VALUE,
 	             schema = @Schema(implementation = UrlPostResponse.class))})
 	@PostMapping(consumes = APPLICATION_JSON_VALUE) 
-	public ResponseEntity<UrlPostResponse> postURL(@Valid @RequestBody UrlPostRequest request) throws ApiNoSuchAlgorithmException  {		
-		return new ResponseEntity<UrlPostResponse>(urlService.saveUrl(request), HttpStatus.CREATED);
+	public ResponseEntity<UrlPostResponse> postURL(@Valid @RequestBody UrlPostRequest urlPostRequest) throws ApiNoSuchAlgorithmException  {		
+		return new ResponseEntity<UrlPostResponse>(urlService.saveUrl(urlPostRequest), HttpStatus.CREATED);
 	}
 }

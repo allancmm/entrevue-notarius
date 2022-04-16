@@ -9,34 +9,39 @@ import org.springframework.http.HttpStatus;
 public class ApiException {
    private final String message;
    private final List<String> details;
-   private final HttpStatus httpStatus;
+   private final Integer status;
+   private final String error;
    private final ZonedDateTime timestamp;
-   
+      
    public ApiException(String message, List<String> details, HttpStatus httpStatus, ZonedDateTime timestamp) {
 	   this.message = message;
 	   this.details = details;
-	   this.httpStatus = httpStatus;
-	   this.timestamp = timestamp;	
+	   this.status = httpStatus.value();
+	   this.error = httpStatus.name();	  
+	   this.timestamp = timestamp;	   
    }
    
    public ApiException(String message, HttpStatus httpStatus, ZonedDateTime timestamp) {
 	   this.message = message;
 	   this.details = null;
-	   this.httpStatus = httpStatus;
+	   this.status = httpStatus.value();
+	   this.error = httpStatus.name();	  
 	   this.timestamp = timestamp;	
    }
    
    public ApiException(String message, List<String> details, HttpStatus httpStatus) {
 	   this.message = message;
-	   this.details = details;
-	   this.httpStatus = httpStatus;
+	   this.details = details;	   
+	   this.status = httpStatus.value();
+	   this.error = httpStatus.name();	   
 	   this.timestamp = ZonedDateTime.now(ZoneId.of("UTC"));	
    }
    
    public ApiException(String message, HttpStatus httpStatus) {
 	   this.message = message;
 	   this.details = null;
-	   this.httpStatus = httpStatus;
+	   this.status = httpStatus.value();
+	   this.error = httpStatus.name();	 
 	   this.timestamp = ZonedDateTime.now(ZoneId.of("UTC"));	
    }
 
@@ -44,10 +49,14 @@ public class ApiException {
 		return message;
 	}
 	
-	public HttpStatus getHttpStatus() {
-		return httpStatus;
+	public Integer getStatus() {
+		return status;
 	}
-	
+
+	public String getError() {
+		return error;
+	}
+
 	public List<String> getDetails() {
 		return details;
 	}
