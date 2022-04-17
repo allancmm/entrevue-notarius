@@ -1,4 +1,4 @@
-package com.example.entrevueSpringBoot.exception;
+package com.entrevue.exception;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,10 +1,11 @@
-package com.example.entrevueSpringBoot.repository;
+package com.entrevue.repository;
 
 import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-import com.example.entrevueSpringBoot.model.Url;
+
+import com.entrevue.model.Url;
 
 /*
  * @author Allan Martins

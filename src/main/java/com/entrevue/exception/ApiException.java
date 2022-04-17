@@ -1,4 +1,4 @@
-package com.example.entrevueSpringBoot.exception;
+package com.entrevue.exception;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;

@@ -1,4 +1,4 @@
-package com.example.entrevueSpringBoot.model;
+package com.entrevue.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;

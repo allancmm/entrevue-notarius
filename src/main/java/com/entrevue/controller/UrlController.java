@@ -1,4 +1,4 @@
-package com.example.entrevueSpringBoot.controller;
+package com.entrevue.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.entrevueSpringBoot.dto.request.UrlPostRequest;
-import com.example.entrevueSpringBoot.dto.response.UrlGetResponse;
-import com.example.entrevueSpringBoot.dto.response.UrlPostResponse;
-import com.example.entrevueSpringBoot.exception.ApiNoSuchAlgorithmException;
-import com.example.entrevueSpringBoot.service.UrlService;
+import com.entrevue.dto.request.UrlPostRequest;
+import com.entrevue.dto.response.UrlGetResponse;
+import com.entrevue.dto.response.UrlPostResponse;
+import com.entrevue.exception.ApiNoSuchAlgorithmException;
+import com.entrevue.service.UrlService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

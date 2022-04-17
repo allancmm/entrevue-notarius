@@ -1,4 +1,4 @@
-package com.example.entrevueSpringBoot.dto.response;
+package com.entrevue.dto.response;
 
 /*
  * @author Allan Martins

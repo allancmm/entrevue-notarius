@@ -1,4 +1,4 @@
-package com.example.entrevueSpringBoot.dto.request;
+package com.entrevue.dto.request;
 
 import javax.validation.constraints.NotBlank;
 

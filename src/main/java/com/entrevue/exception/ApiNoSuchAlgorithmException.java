@@ -1,4 +1,4 @@
-package com.example.entrevueSpringBoot.exception;
+package com.entrevue.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

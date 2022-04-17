@@ -1,4 +1,4 @@
-package com.example.entrevueSpringBoot.service;
+package com.entrevue.service;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -6,14 +6,14 @@ import java.util.Base64;
 
 import org.springframework.stereotype.Service;
 
-import com.example.entrevueSpringBoot.dto.request.UrlPostRequest;
-import com.example.entrevueSpringBoot.dto.response.UrlGetResponse;
-import com.example.entrevueSpringBoot.dto.response.UrlPostResponse;
-import com.example.entrevueSpringBoot.exception.ApiNoSuchAlgorithmException;
-import com.example.entrevueSpringBoot.exception.UrlShortenedNotFoundException;
-import com.example.entrevueSpringBoot.mapper.UrlMapper;
-import com.example.entrevueSpringBoot.model.Url;
-import com.example.entrevueSpringBoot.repository.URLRepository;
+import com.entrevue.dto.request.UrlPostRequest;
+import com.entrevue.dto.response.UrlGetResponse;
+import com.entrevue.dto.response.UrlPostResponse;
+import com.entrevue.exception.ApiNoSuchAlgorithmException;
+import com.entrevue.exception.UrlShortenedNotFoundException;
+import com.entrevue.mapper.UrlMapper;
+import com.entrevue.model.Url;
+import com.entrevue.repository.URLRepository;
 
 /*
  * @author Allan Martins
