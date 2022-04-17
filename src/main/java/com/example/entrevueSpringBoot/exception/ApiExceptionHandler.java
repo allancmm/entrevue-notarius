@@ -19,8 +19,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
       
    @ExceptionHandler(UrlShortenedNotFoundException.class)
-   public <T> ResponseEntity<ApiException> handleUrlShortenedNotFoundException(UrlShortenedNotFoundException e) {
-	   ApiException apiException = new ApiException(e.getMessage(), HttpStatus.NOT_FOUND);
+   public <T> ResponseEntity<ApiException> handleUrlShortenedNotFoundException(UrlShortenedNotFoundException e) {	   
+	   ApiException apiException = ApiException.builder()
+			                           .message(e.getMessage())
+			                           .httpStatus(HttpStatus.NOT_FOUND)
+			                           .build();
 	   return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiException);
    }      
    
@@ -28,14 +31,20 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
    public ResponseEntity<ApiException> handleGenericException(Exception e) {
 	   List<String> details = new ArrayList<>();
 	   details.add(e.getLocalizedMessage());
-	   ApiException apiException = new ApiException(e.getMessage(), details, HttpStatus.INTERNAL_SERVER_ERROR);
+	   ApiException apiException = ApiException.builder()
+               .message(e.getMessage())
+               .details(details)
+               .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+               .build();
 	   return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiException);
    }
 
    @ExceptionHandler(NullPointerException.class)
    public ResponseEntity<ApiException> handleException(NullPointerException e) {
-	   
-	   ApiException apiException = new ApiException("We tried to read a null object, what a shame", HttpStatus.INTERNAL_SERVER_ERROR);
+	   ApiException apiException = ApiException.builder()
+               .message("We tried to read a null object, what a shame")
+               .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+               .build();
 	   return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiException);
    }
    
@@ -47,7 +56,11 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		      HttpStatus status, WebRequest request) {
 	   List<String> details = new ArrayList<>();
 	   details.add(e.getLocalizedMessage());
-	   ApiException apiException = new ApiException(e.getMessage(), details, HttpStatus.BAD_REQUEST);
+	   ApiException apiException = ApiException.builder()
+               .message(e.getMessage())
+               .details(details)
+               .httpStatus(HttpStatus.BAD_REQUEST)
+               .build();
 	   return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiException);
    }
    
@@ -58,21 +71,31 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	   ex.getBindingResult()
 	   .getFieldErrors().stream().forEach( f -> System.out.println(f.getDefaultMessage()));
 	   
-	   ApiException apiException = new ApiException(ex.getMessage(), HttpStatus.BAD_REQUEST);
+	   ApiException apiException = ApiException.builder()
+               .message(ex.getMessage())
+               .httpStatus(HttpStatus.BAD_REQUEST)
+               .build();
+	   
 	   return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiException);
 	}
    
    @Override
 	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-     	ApiException apiException = new ApiException(ex.getMessage(), HttpStatus.METHOD_NOT_ALLOWED);
+	   ApiException apiException = ApiException.builder()
+               .message(ex.getMessage())
+               .httpStatus(HttpStatus.METHOD_NOT_ALLOWED)
+               .build();
      	return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(apiException);  
 	}   
    
    @Override
 	protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-       ApiException apiException = new ApiException(ex.getMessage(), HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+	   ApiException apiException = ApiException.builder()
+               .message(ex.getMessage())
+               .httpStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
+               .build();
        return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).body(apiException);   
 	}
 }

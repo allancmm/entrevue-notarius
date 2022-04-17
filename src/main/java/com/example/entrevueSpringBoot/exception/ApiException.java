@@ -12,39 +12,44 @@ public class ApiException {
    private final Integer status;
    private final String error;
    private final ZonedDateTime timestamp;
-      
-   public ApiException(String message, List<String> details, HttpStatus httpStatus, ZonedDateTime timestamp) {
-	   this.message = message;
-	   this.details = details;
-	   this.status = httpStatus.value();
-	   this.error = httpStatus.name();	  
-	   this.timestamp = timestamp;	   
+   
+   public ApiException(Builder builder) {
+	   this.message = builder.message;
+	   this.details = builder.details;
+	   this.status = builder.httpStatus.value();
+	   this.error = builder.httpStatus.name();	  
+	   this.timestamp = ZonedDateTime.now(ZoneId.of("UTC"));	  
    }
    
-   public ApiException(String message, HttpStatus httpStatus, ZonedDateTime timestamp) {
-	   this.message = message;
-	   this.details = null;
-	   this.status = httpStatus.value();
-	   this.error = httpStatus.name();	  
-	   this.timestamp = timestamp;	
+   public static Builder builder() {
+	   return new Builder();
+   }
+   public static class Builder {
+	   public String message;
+	   public List<String> details;
+	   public HttpStatus httpStatus;
+	   public ZonedDateTime timestamp;
+	   
+	   public ApiException build() {
+		   return new ApiException(this);
+	   }
+	   
+	   public Builder message(String message) {
+		   this.message = message;
+		   return this;
+	   }
+	   
+	   public Builder details(List<String> details) {
+		   this.details = details;
+		   return this;
+	   }
+	   
+	   public Builder httpStatus(HttpStatus httpStatus) {
+		   this.httpStatus = httpStatus;
+		   return this;
+	   }
    }
    
-   public ApiException(String message, List<String> details, HttpStatus httpStatus) {
-	   this.message = message;
-	   this.details = details;	   
-	   this.status = httpStatus.value();
-	   this.error = httpStatus.name();	   
-	   this.timestamp = ZonedDateTime.now(ZoneId.of("UTC"));	
-   }
-   
-   public ApiException(String message, HttpStatus httpStatus) {
-	   this.message = message;
-	   this.details = null;
-	   this.status = httpStatus.value();
-	   this.error = httpStatus.name();	 
-	   this.timestamp = ZonedDateTime.now(ZoneId.of("UTC"));	
-   }
-
 	public String getMessage() {
 		return message;
 	}
