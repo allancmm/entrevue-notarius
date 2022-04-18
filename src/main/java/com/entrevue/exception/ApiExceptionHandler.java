@@ -2,6 +2,7 @@ package com.entrevue.exception;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -67,12 +68,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
    @Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {	
-	   
-	   ex.getBindingResult()
-	   .getFieldErrors().stream().forEach( f -> System.out.println(f.getDefaultMessage()));
+	   List<String> details = ex.getBindingResult()
+	                                .getFieldErrors()
+	                                .stream()
+	                                .map(f -> f.getDefaultMessage())
+	                                .collect(Collectors.toList());
 	   
 	   ApiException apiException = ApiException.builder()
-               .message(ex.getMessage())
+               .message("Error validation")
+               .details(details)
                .httpStatus(HttpStatus.BAD_REQUEST)
                .build();
 	   

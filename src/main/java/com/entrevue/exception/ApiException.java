@@ -24,6 +24,7 @@ public class ApiException {
    public static Builder builder() {
 	   return new Builder();
    }
+   
    public static class Builder {
 	   public String message;
 	   public List<String> details;
