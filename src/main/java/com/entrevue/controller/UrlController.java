@@ -25,14 +25,17 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /*
  * @author Allan Martins
  */
+
 @RestController
 @RequestMapping(path = "/api/v1/url", produces = APPLICATION_JSON_VALUE)
+@Tag(name = "URL")
 public class UrlController {
-			
+	
 	@Autowired
 	private UrlService urlService;
 			
@@ -43,7 +46,7 @@ public class UrlController {
 	                       @ApiResponse(responseCode = "404", description = "URL not fount", content = @Content)}) 
 	@GetMapping
 	public ResponseEntity<UrlGetResponse> getURL(@RequestParam(value = "urlShortened", required = true) String urlShortened) {
-         return new ResponseEntity<UrlGetResponse>(urlService.getUrlShortened(urlShortened), HttpStatus.OK);
+         return new ResponseEntity<>(urlService.getUrlShortened(urlShortened), HttpStatus.OK);
 	}
 	
 	@Operation(summary = "Short URL")
@@ -51,7 +54,7 @@ public class UrlController {
 	             content = {@Content(mediaType = APPLICATION_JSON_VALUE,
 	             schema = @Schema(implementation = UrlPostResponse.class))})
 	@PostMapping(consumes = APPLICATION_JSON_VALUE) 
-	public ResponseEntity<UrlPostResponse> postURL(@Valid @RequestBody UrlPostRequest urlPostRequest) throws ApiNoSuchAlgorithmException  {		
-		return new ResponseEntity<UrlPostResponse>(urlService.saveUrl(urlPostRequest), HttpStatus.CREATED);
+	public ResponseEntity<UrlPostResponse> postURL(@Valid @RequestBody UrlPostRequest urlPostRequest) throws ApiNoSuchAlgorithmException  {	
+		return new ResponseEntity<>(urlService.saveUrl(urlPostRequest), HttpStatus.CREATED);
 	}
 }

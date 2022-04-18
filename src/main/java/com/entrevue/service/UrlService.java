@@ -4,6 +4,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.entrevue.dto.request.UrlPostRequest;
@@ -22,6 +24,8 @@ import com.entrevue.repository.URLRepository;
 @Service
 public class UrlService {
 
+	private static final Logger LOG = LoggerFactory.getLogger(UrlService.class);
+
 	private final URLRepository urlRepository;
 	
 	private final UrlMapper urlMapper;
@@ -36,7 +40,10 @@ public class UrlService {
 
 	public UrlGetResponse getUrlShortened(String urlShortened) {
 		final Url url = urlRepository.findByurlShortened(urlShortened)
-				                     .orElseThrow(() -> new UrlShortenedNotFoundException("Url not found: " + urlShortened));
+				                     .orElseThrow(() -> {
+				             			 LOG.warn("Url not found: " + urlShortened);
+				                    	 return new UrlShortenedNotFoundException("Url not found: " + urlShortened);
+				                     });
 		return urlMapper.mapToUrlGetResponse(url);
    }
 	
@@ -45,6 +52,7 @@ public class UrlService {
 		try {
 			md = MessageDigest.getInstance(HASH_ALGORITHM);
 		} catch (NoSuchAlgorithmException e) {
+			LOG.error("Error occurred in saveUrl", e);
 			throw new ApiNoSuchAlgorithmException("Oops, it seems that we have a problem");
 		}
 
