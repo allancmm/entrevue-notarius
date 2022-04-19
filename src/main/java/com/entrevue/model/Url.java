@@ -14,6 +14,13 @@ public class Url {
 	
 	private String urlOriginal;
 	
+	public Url(String urlShortened, String urlOriginal) {
+		this.urlShortened = urlShortened;
+		this.urlOriginal = urlOriginal;
+	}
+	
+	public Url() {}
+	
 	public String getUrlShortened() {
 		return urlShortened;
 	}

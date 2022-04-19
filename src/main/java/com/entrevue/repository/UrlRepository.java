@@ -12,7 +12,7 @@ import com.entrevue.model.Url;
  */
 
 @Repository
-public interface URLRepository extends MongoRepository<Url, String> {
+public interface UrlRepository extends MongoRepository<Url, String> {
 
-	public Optional<Url> findByurlShortened(String urlShortened);
+	public Optional<Url> findByUrlShortened(String urlShortened);
 }

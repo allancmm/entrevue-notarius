@@ -8,5 +8,20 @@ public class UrlPostRequest {
 	
    @NotBlank(message = "urlToShort cannot be null or empty")
    @Schema(required = true, description = "Url to be shortened")
-   public String urlToShort;
+   private String urlToShort;
+
+   public UrlPostRequest() {}
+   
+   public UrlPostRequest(String urlToShort) {
+	   this.urlToShort = urlToShort;
+   }
+   
+   public String getUrlToShort() {
+		return urlToShort;
+   }
+	
+   public void setUrlToShort(String urlToShort) {
+		this.urlToShort = urlToShort;
+   }
+   
 }

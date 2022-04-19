@@ -10,5 +10,6 @@
   * Spring Boot
   * Lombok
   * Mapstruct
-  * AssertJ
+  * flapdoodle
+  * Swagger
   

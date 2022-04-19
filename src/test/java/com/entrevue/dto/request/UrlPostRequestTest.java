@@ -23,14 +23,39 @@ public class UrlPostRequestTest {
 	@Test
 	public void whenNotEmptyUrl_thenNoConstraintViolations() {
 		// given
-		UrlPostRequest urlPostRequest = new UrlPostRequest();
-		urlPostRequest.urlToShort = "www.google.com";
+		UrlPostRequest urlPostRequest = new UrlPostRequest("www.google.com");
 		
 		// when
 		Set<ConstraintViolation<UrlPostRequest>> violations = validator.validate(urlPostRequest);
 		
 		// then
 		assertThat(violations.size()).isEqualTo(0);
+	}
+	
+	@Test
+	public void whenEmptyUrl_thenOneConstraintViolation() {
+		// give
+		UrlPostRequest urlPostRequest = new UrlPostRequest("");
+		
+		// when
+		Set<ConstraintViolation<UrlPostRequest>> violations = validator.validate(urlPostRequest);
+		
+		// then
+        assertThat(violations.size()).isEqualTo(1);
+		
+	}
+	
+	@Test
+	public void whenNullUrl_thenOneConstraintViolation() {
+		// give
+		UrlPostRequest urlPostRequest = new UrlPostRequest();
+		
+		// when
+		Set<ConstraintViolation<UrlPostRequest>> violations = validator.validate(urlPostRequest);
+		
+		// then
+        assertThat(violations.size()).isEqualTo(1);
+		
 	}
 
 }

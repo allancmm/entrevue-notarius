@@ -15,7 +15,7 @@ import com.entrevue.exception.ApiNoSuchAlgorithmException;
 import com.entrevue.exception.UrlShortenedNotFoundException;
 import com.entrevue.mapper.UrlMapper;
 import com.entrevue.model.Url;
-import com.entrevue.repository.URLRepository;
+import com.entrevue.repository.UrlRepository;
 
 /*
  * @author Allan Martins
@@ -26,11 +26,11 @@ public class UrlService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(UrlService.class);
 
-	private final URLRepository urlRepository;
+	private final UrlRepository urlRepository;
 	
 	private final UrlMapper urlMapper;
 	
-	public UrlService(URLRepository urlRepository, UrlMapper urlMapper) {
+	public UrlService(UrlRepository urlRepository, UrlMapper urlMapper) {
 		this.urlRepository = urlRepository;
 		this.urlMapper = urlMapper;
 	}
@@ -39,7 +39,7 @@ public class UrlService {
 	private final int MAX_LENGHT_URL_SHORTNED = 10;
 
 	public UrlGetResponse getUrlShortened(String urlShortened) {
-		final Url url = urlRepository.findByurlShortened(urlShortened)
+		final Url url = urlRepository.findByUrlShortened(urlShortened)
 				                     .orElseThrow(() -> {
 				             			 LOG.warn("Url not found: " + urlShortened);
 				                    	 return new UrlShortenedNotFoundException("Url not found: " + urlShortened);
@@ -56,7 +56,7 @@ public class UrlService {
 			throw new ApiNoSuchAlgorithmException("Oops, it seems that we have a problem");
 		}
 
-	    md.update(urlRequest.urlToShort.getBytes());	   	    
+	    md.update(urlRequest.getUrlToShort().getBytes());	   	    
 	    byte[] encodedurlShortened = Base64.getUrlEncoder().encode(md.digest());
 	    String urlShortened = new String(encodedurlShortened).substring(0, MAX_LENGHT_URL_SHORTNED);	    
    	    return urlMapper.mapToUrlPostResponse(urlRepository.save(urlMapper.mapToUrl(urlRequest, urlShortened)));	    
