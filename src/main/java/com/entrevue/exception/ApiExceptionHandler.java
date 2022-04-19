@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +18,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+/*
+ * @author Allan Martins
+ */
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
-      
+
+   private static final Logger LOG = LoggerFactory.getLogger(ApiExceptionHandler.class);
+
+	
    @ExceptionHandler(UrlShortenedNotFoundException.class)
    public <T> ResponseEntity<ApiException> handleUrlShortenedNotFoundException(UrlShortenedNotFoundException e) {	   
 	   ApiException apiException = ApiException.builder()
@@ -30,6 +38,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
    
    @ExceptionHandler({ Exception.class })
    public ResponseEntity<ApiException> handleGenericException(Exception e) {
+	   LOG.error("Exception", e);
 	   List<String> details = new ArrayList<>();
 	   details.add(e.getLocalizedMessage());
 	   ApiException apiException = ApiException.builder()
@@ -42,6 +51,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
    @ExceptionHandler(NullPointerException.class)
    public ResponseEntity<ApiException> handleException(NullPointerException e) {
+	   LOG.error("NullPointerException", e);
 	   ApiException apiException = ApiException.builder()
                .message("We tried to read a null object, what a shame")
                .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -67,7 +77,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
    
    @Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-			HttpHeaders headers, HttpStatus status, WebRequest request) {	
+			HttpHeaders headers, HttpStatus status, WebRequest request) {	   
 	   List<String> details = ex.getBindingResult()
 	                                .getFieldErrors()
 	                                .stream()

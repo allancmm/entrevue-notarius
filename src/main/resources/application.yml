@@ -4,8 +4,11 @@ spring:
       host: localhost
       port: 27017
       database: UrlStore
-   
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher        
    
 server:
   error:
     include-message: always   
+    

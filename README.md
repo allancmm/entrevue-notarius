@@ -9,4 +9,6 @@
 # Libraries
   * Spring Boot
   * Lombok
+  * Mapstruct
+  * AssertJ
   

@@ -14,11 +14,11 @@ public class Url {
 	
 	private String urlOriginal;
 	
-	public String geturlShortened() {
+	public String getUrlShortened() {
 		return urlShortened;
 	}
 
-	public void seturlShortened(String urlShortened) {
+	public void setUrlShortened(String urlShortened) {
 		this.urlShortened = urlShortened;
 	}
 
