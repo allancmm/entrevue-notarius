@@ -1,5 +1,9 @@
 package com.entrevue.model;
 
+import java.util.Objects;
+
+import javax.validation.constraints.NotBlank;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
 
@@ -10,13 +14,15 @@ import org.springframework.data.annotation.Id;
 public class Url {
 
 	@Id
+	@NotBlank(message = "Url shortened cannot be null or emtpy")
 	private String urlShortened;
 	
+	@NotBlank(message = "Url origin cannot be null or empty")
 	private String urlOriginal;
 	
 	public Url(String urlShortened, String urlOriginal) {
-		this.urlShortened = urlShortened;
-		this.urlOriginal = urlOriginal;
+		this.urlShortened = Objects.requireNonNull(urlShortened);
+		this.urlOriginal = Objects.requireNonNull(urlShortened);;
 	}
 	
 	public Url() {}

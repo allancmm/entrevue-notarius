@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.ConstraintViolationException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -59,7 +61,19 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	   return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiException);
    }
    
-   
+   @ExceptionHandler(ConstraintViolationException.class)
+   public ResponseEntity<ApiException> handleConstraintViolationException(ConstraintViolationException e) {
+	   LOG.error("Exception", e);
+	   List<String> details = new ArrayList<>();
+	   // TODO - separate each error message
+	   details.add(e.getLocalizedMessage());
+	   ApiException apiException = ApiException.builder()
+               .message("Error validation")
+               .details(details)
+               .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+               .build();
+	   return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiException);
+   }
    // 
    
    @Override
