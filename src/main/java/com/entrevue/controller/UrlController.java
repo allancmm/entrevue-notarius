@@ -45,8 +45,8 @@ public class UrlController {
 	                                    schema = @Schema(implementation = UrlGetResponse.class))}),
 	                       @ApiResponse(responseCode = "404", description = "URL not fount", content = @Content)}) 
 	@GetMapping
-	public ResponseEntity<UrlGetResponse> getURL(@RequestParam(value = "urlShortened", required = true) String urlShortened) {
-         return new ResponseEntity<>(urlService.getUrlShortened(urlShortened), HttpStatus.OK);
+	public ResponseEntity<UrlGetResponse> getUrl(@RequestParam(value = "urlShortened", required = true) String urlShortened) {
+         return new ResponseEntity<>(urlService.getByUrlShortened(urlShortened), HttpStatus.OK);
 	}
 	
 	@Operation(summary = "Short URL")
@@ -54,7 +54,7 @@ public class UrlController {
 	             content = {@Content(mediaType = APPLICATION_JSON_VALUE,
 	             schema = @Schema(implementation = UrlPostResponse.class))})
 	@PostMapping(consumes = APPLICATION_JSON_VALUE) 
-	public ResponseEntity<UrlPostResponse> postURL(@Valid @RequestBody UrlPostRequest urlPostRequest) throws ApiNoSuchAlgorithmException  {	
+	public ResponseEntity<UrlPostResponse> postUrl(@Valid @RequestBody UrlPostRequest urlPostRequest) throws ApiNoSuchAlgorithmException  {	
 		return new ResponseEntity<>(urlService.saveUrl(urlPostRequest), HttpStatus.CREATED);
 	}
 }

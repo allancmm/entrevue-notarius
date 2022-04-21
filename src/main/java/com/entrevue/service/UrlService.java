@@ -26,19 +26,17 @@ public class UrlService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(UrlService.class);
 
-	private final UrlRepository urlRepository;
-	
-	private final UrlMapper urlMapper;
+	private final UrlRepository urlRepository;	
+	private final UrlMapper urlMapper;		
+	private final String HASH_ALGORITHM = "MD5";
+	private final int MAX_LENGHT_URL_SHORTNED = 10;
 	
 	public UrlService(UrlRepository urlRepository, UrlMapper urlMapper) {
 		this.urlRepository = urlRepository;
 		this.urlMapper = urlMapper;
 	}
 	
-	private final String HASH_ALGORITHM = "MD5";
-	private final int MAX_LENGHT_URL_SHORTNED = 10;
-
-	public UrlGetResponse getUrlShortened(String urlShortened) {
+	public UrlGetResponse getByUrlShortened(String urlShortened) {
 		final Url url = urlRepository.findByUrlShortened(urlShortened)
 				                     .orElseThrow(() -> {
 				             			 LOG.warn("Url not found: " + urlShortened);
