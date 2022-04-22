@@ -27,10 +27,7 @@ public class UrlService {
 	private static final Logger LOG = LoggerFactory.getLogger(UrlService.class);
 
 	private final UrlRepository urlRepository;	
-	private final UrlMapper urlMapper;		
-	private final String HASH_ALGORITHM = "MD5";
-	private final int MAX_LENGHT_URL_SHORTNED = 10;
-	
+	private final UrlMapper urlMapper;
 	public UrlService(UrlRepository urlRepository, UrlMapper urlMapper) {
 		this.urlRepository = urlRepository;
 		this.urlMapper = urlMapper;
@@ -44,9 +41,12 @@ public class UrlService {
 				                     });
 		return urlMapper.mapToUrlGetResponse(url);
    }
-	
+
    public UrlPostResponse saveUrl(UrlPostRequest urlRequest) throws ApiNoSuchAlgorithmException {
-		MessageDigest md;
+	    final String HASH_ALGORITHM = "MD5";
+	    final int MAX_LENGTH_URL_SHORTENED = 10;
+
+	    MessageDigest md;
 		try {
 			md = MessageDigest.getInstance(HASH_ALGORITHM);
 		} catch (NoSuchAlgorithmException e) {
@@ -55,8 +55,8 @@ public class UrlService {
 		}
 
 	    md.update(urlRequest.getUrlToShort().getBytes());	   	    
-	    byte[] encodedurlShortened = Base64.getUrlEncoder().encode(md.digest());
-	    String urlShortened = new String(encodedurlShortened).substring(0, MAX_LENGHT_URL_SHORTNED);	    
+	    byte[] encodedUrlShortened = Base64.getUrlEncoder().encode(md.digest());
+	    String urlShortened = new String(encodedUrlShortened).substring(0, MAX_LENGTH_URL_SHORTENED);
    	    return urlMapper.mapToUrlPostResponse(urlRepository.save(urlMapper.mapToUrl(urlRequest, urlShortened)));	    
    }
 }

@@ -22,7 +22,7 @@ public class Url {
 	
 	public Url(String urlShortened, String urlOriginal) {
 		this.urlShortened = Objects.requireNonNull(urlShortened);
-		this.urlOriginal = Objects.requireNonNull(urlShortened);;
+		this.urlOriginal = Objects.requireNonNull(urlOriginal);
 	}
 	
 	public Url() {}
@@ -41,5 +41,23 @@ public class Url {
 
 	public void setUrlOriginal(String urlOriginal) {
 		this.urlOriginal = urlOriginal;
+	}
+
+	@Override
+	public String toString() {
+		return "urlShortened=" + this.urlShortened + ", urlOriginal=" + this.urlOriginal;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == this) {
+			return true;
+		}
+		if(!(obj instanceof Url)) {
+			return false;
+		}
+
+		Url o = (Url) obj;
+		return this.urlOriginal.equals(o.urlOriginal) && this.urlShortened.equals(o.urlShortened);
 	}
 }

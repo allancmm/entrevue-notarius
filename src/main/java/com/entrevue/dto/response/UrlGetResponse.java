@@ -7,7 +7,14 @@ package com.entrevue.dto.response;
 public class UrlGetResponse {
     private String urlOriginal;
     private String urlShortened;
-   
+
+	public UrlGetResponse() {}
+
+	public UrlGetResponse(String urlOriginal, String urlShortened) {
+		this.urlOriginal = urlOriginal;
+		this.urlShortened = urlShortened;
+	}
+
 	public String getUrlOriginal() {
 		return urlOriginal;
 	}
