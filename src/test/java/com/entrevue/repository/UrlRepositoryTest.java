@@ -21,7 +21,7 @@ import com.entrevue.model.Url;
 @ExtendWith(SpringExtension.class)
 @AutoConfigureDataMongo
 public class UrlRepositoryTest {
-    // UrlRepository is not being tested here as mongoTemplate is being used
+    // UrlRepository is not really being tested here as mongoTemplate is being used
 	private final String URL_DOCUMENT = "Url";
 	
 	@Autowired 
@@ -31,12 +31,7 @@ public class UrlRepositoryTest {
 	void tearDown() {
 		mongoTemplate.remove(new Query(), Url.class);
 	}
-	
-	@AfterAll
-	void tearDownAll() {
-		// mongoTemplate
-	}
-	
+
 	@Test
 	void itShouldFindByUrlShortened() {
 		// given
@@ -63,5 +58,5 @@ public class UrlRepositoryTest {
 		
 		// then		
 		assertThat(mongoTemplate.count(new Query(), Url.class)).isEqualTo(1);
-	}	
+	}
 }

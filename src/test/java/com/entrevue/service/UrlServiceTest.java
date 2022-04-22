@@ -1,5 +1,7 @@
 package com.entrevue.service;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 import com.entrevue.dto.response.UrlGetResponse;
@@ -8,6 +10,7 @@ import com.entrevue.model.Url;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -19,6 +22,8 @@ import com.entrevue.exception.UrlShortenedNotFoundException;
 import com.entrevue.mapper.UrlMapper;
 import com.entrevue.repository.UrlRepository;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -51,6 +56,7 @@ public class UrlServiceTest {
 		assertThatThrownBy(() -> underTest.getByUrlShortened(urlShortened))
 				.isInstanceOf(UrlShortenedNotFoundException.class)
 				.hasMessageContaining("Url not found: " + urlShortened);
+		verify(urlMapper, never()).mapToUrlGetResponse(any());
 	}
 	
 	@Test
@@ -73,8 +79,7 @@ public class UrlServiceTest {
 		UrlPostRequest urlPostRequest = new UrlPostRequest(urlToShort);
 		Url urlToSave = new Url(urlShortened, urlToShort);
 		UrlPostResponse urlPostResponse = new UrlPostResponse();
-				// urlMapper.mapToUrl(urlPostRequest, urlShortened);
-		
+
 		// when 
 		underTest.saveUrl(urlPostRequest);
 		Mockito.when(urlMapper.mapToUrlPostResponse(urlToSave)).thenReturn(urlPostResponse);
@@ -85,4 +90,32 @@ public class UrlServiceTest {
 //		Url capturedUrl = urlArgumentCaptor.getValue();
 //		assertThat(capturedUrl).isEqualTo(urlToSave);
 	}
+	
+	@Test
+	void itShouldSaveUrl() {
+		// given
+		Url urlToSave = new Url(urlShortened, urlToShort);
+
+		// when
+		underTest.saveUrl(urlToSave);
+		
+		// then
+		ArgumentCaptor<Url> urlArgumentCaptor = ArgumentCaptor.forClass(Url.class);
+		verify(urlRepository).save(urlArgumentCaptor.capture());
+
+		Url capturedUrl = urlArgumentCaptor.getValue();
+
+		assertThat(capturedUrl).isEqualTo(urlToSave);
+	}
+
+//	@Test
+//	void itShouldThrowApiNoSuchAlgorithmException() throws NoSuchAlgorithmException {
+//		// given
+//		Url urlToSave = new Url(urlShortened, urlToShort);
+//
+//		// when
+//		underTest.saveUrl(urlToSave);
+//		//
+//
+//	}
 }

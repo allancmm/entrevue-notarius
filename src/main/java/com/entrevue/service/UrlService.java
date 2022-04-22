@@ -46,17 +46,23 @@ public class UrlService {
 	    final String HASH_ALGORITHM = "MD5";
 	    final int MAX_LENGTH_URL_SHORTENED = 10;
 
-	    MessageDigest md;
-		try {
-			md = MessageDigest.getInstance(HASH_ALGORITHM);
-		} catch (NoSuchAlgorithmException e) {
-			LOG.error("Error occurred in saveUrl", e);
-			throw new ApiNoSuchAlgorithmException("Oops, it seems that we have a problem");
-		}
-
+	    MessageDigest md = getMessageDigest(HASH_ALGORITHM);
 	    md.update(urlRequest.getUrlToShort().getBytes());	   	    
 	    byte[] encodedUrlShortened = Base64.getUrlEncoder().encode(md.digest());
 	    String urlShortened = new String(encodedUrlShortened).substring(0, MAX_LENGTH_URL_SHORTENED);
    	    return urlMapper.mapToUrlPostResponse(urlRepository.save(urlMapper.mapToUrl(urlRequest, urlShortened)));	    
+   }
+   
+   public Url saveUrl(Url urlToSave) {
+	   return urlRepository.save(urlToSave);
+   }
+
+   private MessageDigest getMessageDigest(String algorithm) throws ApiNoSuchAlgorithmException {
+	   try {
+		   return MessageDigest.getInstance(algorithm);
+	   } catch (NoSuchAlgorithmException e) {
+		   LOG.error("Error occurred in saveUrl", e);
+		   throw new ApiNoSuchAlgorithmException("Oops, it seems that we have a problem");
+	   }
    }
 }
