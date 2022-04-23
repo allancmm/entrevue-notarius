@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -37,7 +38,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 			                           .build();
 	   return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiException);
    }      
-   
+
    @ExceptionHandler({ Exception.class })
    public ResponseEntity<ApiException> handleGenericException(Exception e) {
 	   LOG.error("Exception", e);
@@ -70,9 +71,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	   ApiException apiException = ApiException.builder()
                .message("Error validation")
                .details(details)
-               .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+               .httpStatus(HttpStatus.BAD_REQUEST)
                .build();
-	   return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiException);
+	   return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiException);
    }
    // 
    
@@ -95,7 +96,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	   List<String> details = ex.getBindingResult()
 	                                .getFieldErrors()
 	                                .stream()
-	                                .map(f -> f.getDefaultMessage())
+	                                .map(FieldError::getDefaultMessage)
 	                                .collect(Collectors.toList());
 	   
 	   ApiException apiException = ApiException.builder()
