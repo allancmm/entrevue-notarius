@@ -26,13 +26,13 @@ public class UrlService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(UrlService.class);
 
-	private final UrlRepository urlRepository;	
+	private final UrlRepository urlRepository;
 	private final UrlMapper urlMapper;
 	public UrlService(UrlRepository urlRepository, UrlMapper urlMapper) {
 		this.urlRepository = urlRepository;
 		this.urlMapper = urlMapper;
 	}
-	
+
 	public UrlGetResponse getByUrlShortened(String urlShortened) {
 		final Url url = urlRepository.findByUrlShortened(urlShortened)
 				                     .orElseThrow(() -> {
@@ -47,12 +47,12 @@ public class UrlService {
 	    final int MAX_LENGTH_URL_SHORTENED = 10;
 
 	    MessageDigest md = getMessageDigest(HASH_ALGORITHM);
-	    md.update(urlRequest.getUrlToShort().getBytes());	   	    
+	    md.update(urlRequest.getUrlToShort().getBytes());
 	    byte[] encodedUrlShortened = Base64.getUrlEncoder().encode(md.digest());
 	    String urlShortened = new String(encodedUrlShortened).substring(0, MAX_LENGTH_URL_SHORTENED);
-   	    return urlMapper.mapToUrlPostResponse(urlRepository.save(urlMapper.mapToUrl(urlRequest, urlShortened)));	    
+   	    return urlMapper.mapToUrlPostResponse(urlRepository.save(urlMapper.mapToUrl(urlRequest, urlShortened)));
    }
-   
+
    public Url saveUrl(Url urlToSave) {
 	   return urlRepository.save(urlToSave);
    }
