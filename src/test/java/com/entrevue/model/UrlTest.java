@@ -12,7 +12,9 @@ public class UrlTest {
 		// given
 		String urlShortened = "CY9rzUYh03";
 		String urlOriginal = "www.google.com";			
-				
+
+		// when
+
 		// then		
 		assertDoesNotThrow(() -> {
 			new Url(urlShortened, urlOriginal);
@@ -22,13 +24,9 @@ public class UrlTest {
 	@Test
 	public void itShouldThrowNullPointerException() {
 		// given
-		String urlShortened = null;
-		String urlOriginal = null;		
-		
+		// when
 		// then		
-		assertThrows(NullPointerException.class, () -> {
-			new Url(urlShortened, urlOriginal);
-		});
+		assertThrows(NullPointerException.class, () -> new Url(null, null));
 	}
 	
 }
