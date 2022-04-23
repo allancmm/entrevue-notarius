@@ -14,12 +14,10 @@ import com.entrevue.model.Url;
 
 @Mapper(componentModel = "spring") 
 public interface UrlMapper {
-   public String mapToUrlShortened(Url url);
-    
    @Mapping(source = "request.urlToShort", target = "urlOriginal")
-   public Url mapToUrl(UrlPostRequest request, String urlShortened);
-    
-   public UrlGetResponse mapToUrlGetResponse(Url url);  
-   
-   public UrlPostResponse mapToUrlPostResponse(Url url);
+   Url mapToUrl(UrlPostRequest request, String urlShortened);
+
+   UrlGetResponse mapToUrlGetResponse(Url url);
+
+   UrlPostResponse mapToUrlPostResponse(Url url);
 }
