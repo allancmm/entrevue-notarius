@@ -14,7 +14,7 @@ import com.entrevue.model.Url;
 
 @Mapper(componentModel = "spring") 
 public interface UrlMapper {
-   @Mapping(source = "request.urlToShort", target = "urlOriginal")
+   @Mapping(target = "urlOriginal", source = "request.urlToShort")
    Url mapToUrl(UrlPostRequest request, String urlShortened);
 
    UrlGetResponse mapToUrlGetResponse(Url url);
