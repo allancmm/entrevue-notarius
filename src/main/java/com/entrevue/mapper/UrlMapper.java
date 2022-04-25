@@ -7,6 +7,7 @@ import com.entrevue.dto.request.UrlPostRequest;
 import com.entrevue.dto.response.UrlGetResponse;
 import com.entrevue.dto.response.UrlPostResponse;
 import com.entrevue.model.Url;
+import org.mapstruct.Mappings;
 
 /*
  * @author Allan Martins
@@ -14,7 +15,7 @@ import com.entrevue.model.Url;
 
 @Mapper(componentModel = "spring") 
 public interface UrlMapper {
-   @Mapping(target = "urlOriginal", source = "request.urlToShort")
+   @Mappings({@Mapping(target = "urlOriginal", source = "request.urlToShort")})
    Url mapToUrl(UrlPostRequest request, String urlShortened);
 
    UrlGetResponse mapToUrlGetResponse(Url url);

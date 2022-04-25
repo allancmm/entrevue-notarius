@@ -1,23 +1,12 @@
 package com.entrevue.dto.response;
 
+import lombok.Data;
+
 /*
  * @author Allan Martins
  */
-
+@Data
 public class UrlPostResponse {
     private String urlOriginal;
     private String urlShortened;
-   
-	public String getUrlOriginal() {
-		return urlOriginal;
-	}
-	public void setUrlOriginal(String urlOriginal) {
-		this.urlOriginal = urlOriginal;
-	}
-	public String geturlShortened() {
-		return urlShortened;
-	}
-	public void seturlShortened(String urlShortened) {
-		this.urlShortened = urlShortened;
-	}   
 }
