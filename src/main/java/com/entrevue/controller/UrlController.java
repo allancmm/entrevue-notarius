@@ -35,17 +35,20 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping(path = "/api/v1/url", produces = APPLICATION_JSON_VALUE)
 @Tag(name = "URL")
 public class UrlController {
-	
-	@Autowired
-	private UrlService urlService;
-			
+
+	private final UrlService urlService;
+
+	public UrlController(UrlService urlService) {
+		this.urlService = urlService;
+	}
+
 	@Operation(summary = "Return URL based on ID")
 	@ApiResponses(value = {@ApiResponse(responseCode = "200", description = "URL found", 
 	                                    content = {@Content(mediaType = APPLICATION_JSON_VALUE, 
 	                                    schema = @Schema(implementation = UrlGetResponse.class))}),
 	                       @ApiResponse(responseCode = "404", description = "URL not fount", content = @Content)}) 
 	@GetMapping
-	public ResponseEntity<UrlGetResponse> getUrl(@RequestParam(value = "urlShortened", required = true) String urlShortened) {
+	public ResponseEntity<UrlGetResponse> getUrl(@RequestParam(value = "urlShortened") String urlShortened) {
          return new ResponseEntity<>(urlService.getByUrlShortened(urlShortened), HttpStatus.OK);
 	}
 	
